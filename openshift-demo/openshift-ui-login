@@ -1,0 +1,8 @@
+# login to openshift UI
+Username: kubeadmin
+Password: nMJes-I6HIv-kn7KM-g7gYp
+
+
+# login to CLI
+oc login -u kubeadmin -p nMJes-I6HIv-kn7KM-g7gYp https://api.crc.testing:6443
+

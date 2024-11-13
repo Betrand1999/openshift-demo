@@ -1,0 +1,13 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: myapp
+  namespace: my-namespace
+spec:
+  tags:
+    - name: latest
+      from:
+        kind: DockerImage
+        name: docker.io/betrand1997/hello-world:latest
+      importPolicy:
+        scheduled: true  # Automatically check for updates

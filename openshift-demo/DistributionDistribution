@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<installer-script minSpecVersion="1">
+    <title>Red Hat OpenShift Local</title>
+    <background mime-type="image/png" file="banner.png" scaling="proportional"/>
+    <welcome file="welcome.html" mime-type="text/html"/>
+    <conclusion file="conclusion.html" mime-type="text/html"/>
+    <license file="LICENSE.txt"/>
+    <options customize="never" allow-external-scripts="no"/>
+    <domains enable_localSystem="true"/>
+    <options rootVolumeOnly="true"/>
+    <options hostArchitectures="x86_64,arm64"/>
+    <installation-check script="installCheck();"/>
+    <script>
+function installCheck() {
+	var apps = system.applications.fromIdentifier('com.redhat.codeready.containers');
+	if(apps) {
+        my.result.title = 'Update failed';
+        my.result.message = 'Red Hat OpenShift Local is running. Please stop the application before updating.';
+        my.result.type = 'Fatal';
+        return false;
+	}
+
+    if(!(system.compareVersions(system.version.ProductVersion, '12.0.0') &gt;= 0)) {
+        my.result.title = 'Unable to install';
+        my.result.message = 'Red Hat OpenShift Local requires macOS 12 or later.';
+        my.result.type = 'Fatal';
+        return false;
+    }
+
+    if(!(system.compareVersions(system.version.ProductVersion, '13.0.0') &gt;= 0)) {
+        my.result.title = 'Deprecation warning';
+        my.result.message = 'This version of macOS is going to be unsupported for Red Hat OpenShift Local, Please update to macOS 13 or newer';
+        my.result.type = 'Warning';
+        return true;
+    }
+    return true;
+}
+    </script>
+    <choices-outline>
+        <line choice="crc"/>
+    </choices-outline>
+    <choice id="crc" title="Red Hat OpenShift Local" enabled="false" selected="true" visible="true">
+        <pkg-ref id="crc.pkg"/>
+    </choice>
+    <pkg-ref id="crc.pkg" auth="Root" packageIdentifier="com.redhat.crc" version="2.41.0" installKBytes="193857">#crc.pkg</pkg-ref>
+    <pkg-ref id="crc.pkg">
+        <bundle-version/>
+    </pkg-ref>
+</installer-script>

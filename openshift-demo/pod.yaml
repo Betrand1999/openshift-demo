@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp
+  labels:
+    namespace: my-namespace
+    app: myapp  # Changed "name" to "app" for consistency with the Service selector
+spec:
+  containers:
+  - name: myapp
+    image: betrand1997/myapp
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
